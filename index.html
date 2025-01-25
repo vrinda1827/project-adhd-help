@@ -24,3 +24,76 @@
         document.getElementById('main-container').style.display = 'block';
     }, 3000);
 </script>
+<!-- Main Container -->
+<div id="main-container" style="display: none; text-align: center; padding: 20px;">
+    <header>
+        <h1 style="color: turquoise; font-size: 2.5rem;">Focus Mate</h1>
+        <button onclick="showMyTasks()" style="margin-top: 20px; background: turquoise; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer;">My Tasks</button>
+    </header>
+</div>
+<script>
+    function showMyTasks() {
+        document.getElementById('my-tasks-section').style.display = 'block';
+        document.getElementById('add-task').style.display = 'block';
+    }
+</script>
+<!-- My Tasks Section -->
+<section id="my-tasks-section" style="display: none; margin-top: 20px;">
+    <h2 style="color: turquoise; font-family: 'Lora', serif; font-size: 2rem;">My Tasks</h2>
+    <div id="tasks-container" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin: 20px 0;"></div>
+    <button id="add-task" onclick="addTask()" style="display: none; position: fixed; bottom: 20px; right: 20px; background: turquoise; color: white; border: none; font-size: 2rem; border-radius: 50%; width: 60px; height: 60px; cursor: pointer; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);">+</button>
+</section>
+<script>
+    function addTask() {
+        const taskDiv = document.createElement('div');
+        taskDiv.className = 'task';
+        taskDiv.style.cssText = 'background: turquoise; color: white; border-radius: 50px; padding: 10px 20px; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);';
+
+        const taskContent = document.createElement('span');
+        taskContent.textContent = 'New Task';
+        taskContent.onclick = () => {
+            document.getElementById('timer-popup').classList.remove('hidden');
+        };
+
+        const editButton = document.createElement('button');
+        editButton.textContent = '✎';
+        editButton.onclick = () => {
+            const newName = prompt('Edit Task Name:', taskContent.textContent);
+            if (newName) taskContent.textContent = newName;
+        };
+
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = '✖';
+        deleteButton.onclick = () => taskDiv.remove();
+
+        taskDiv.append(taskContent, editButton, deleteButton);
+        document.getElementById('tasks-container').appendChild(taskDiv);
+    }
+</script>
+<!-- Timer Popup -->
+<div id="timer-popup" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 1000;">
+    <div class="popup-content" style="background: white; padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);">
+        <h2 style="color: turquoise; font-size: 1.5rem;">Set Timer</h2>
+        <input type="number" id="timer-input" placeholder="Enter time (minutes)" style="width: 50%; padding: 5px; margin: 10px 0; border: 2px solid turquoise; border-radius: 5px; font-size: 1rem;">
+        <div class="timer-controls" style="display: flex; gap: 15px; justify-content: center; margin-top: 10px;">
+            <button id="start-timer" style="background: turquoise; color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 1.2rem;">▶</button>
+            <button id="pause-timer" style="background: turquoise; color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 1.2rem;">⏸</button>
+            <button id="reset-timer" style="background: turquoise; color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 1.2rem;">⭯</button>
+            <button onclick="closePopup()" style="background: red; color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 1.2rem;">✖</button>
+        </div>
+    </div>
+</div>
+<script>
+    function closePopup() {
+        document.getElementById('timer-popup').classList.add('hidden');
+    }
+    document.getElementById('start-timer').addEventListener('click', () => {
+        const duration = parseInt(document.getElementById('timer-input').value, 10);
+        if (isNaN(duration) || duration <= 0) {
+            alert('Please enter a valid time!');
+        } else {
+            alert(Timer started for ${duration} minutes!);
+            document.getElementById('timer-popup').classList.add('hidden');
+        }
+    });
+</script>
