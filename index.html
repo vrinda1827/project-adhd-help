@@ -1,0 +1,26 @@
+<!-- Splash Screen -->
+<div id="splash-screen">
+    <h1 id="focus-mate-title">FOCUS MATE</h1>
+</div>
+<style>
+    #splash-screen {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: white;
+        border: 10px solid turquoise;
+        border-image: repeating-linear-gradient(45deg, turquoise, white 15px) 30;
+    }
+    #focus-mate-title {
+        font-size: 3rem;
+        font-weight: bold;
+        color: turquoise;
+    }
+</style>
+<script>
+    setTimeout(() => {
+        document.getElementById('splash-screen').style.display = 'none';
+        document.getElementById('main-container').style.display = 'block';
+    }, 3000);
+</script>
